@@ -5,7 +5,9 @@ QT += opengl
 TARGET = qanachem
 TEMPLATE = app
 SOURCES += main.cpp \
-    mainwindow.cpp
-HEADERS += mainwindow.h
+    mainwindow.cpp \
+    glwidget.cpp
+HEADERS += mainwindow.h \
+    glwidget.h
 FORMS += mainwindow.ui
 RESOURCES += resources.qrc

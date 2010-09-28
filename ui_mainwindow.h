@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Sep 29 00:08:11 2010
+** Created: Wed Sep 29 01:49:43 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,18 +14,16 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QGraphicsView>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
+#include <QtGui/QScrollBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBox>
-#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
+#include <glwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -37,11 +35,13 @@ public:
     QHBoxLayout *horizontalLayout;
     QToolBox *toolBox;
     QWidget *page;
-    QVBoxLayout *verticalLayout;
-    QPushButton *pushButton;
-    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout_2;
+    QScrollBar *verticalScrollBar;
+    QScrollBar *verticalScrollBar_2;
+    QScrollBar *verticalScrollBar_3;
     QWidget *page_2;
-    QGraphicsView *graphicsView;
+    QWidget *page_3;
+    GLWidget *widget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QStatusBar *statusBar;
@@ -56,11 +56,14 @@ public:
         sizePolicy.setVerticalStretch(20);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icons/icons/DNA_icon.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         actionQuit = new QAction(MainWindow);
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/icons/icons/exit.svgz"), QSize(), QIcon::Normal, QIcon::Off);
-        actionQuit->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/icons/icons/exit.svgz"), QSize(), QIcon::Normal, QIcon::Off);
+        actionQuit->setIcon(icon1);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -76,32 +79,54 @@ public:
         toolBox->setSizePolicy(sizePolicy1);
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        page->setGeometry(QRect(0, 0, 109, 279));
-        verticalLayout = new QVBoxLayout(page);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        pushButton = new QPushButton(page);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        page->setGeometry(QRect(0, 0, 90, 250));
+        horizontalLayout_2 = new QHBoxLayout(page);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        verticalScrollBar = new QScrollBar(page);
+        verticalScrollBar->setObjectName(QString::fromUtf8("verticalScrollBar"));
+        verticalScrollBar->setMaximum(360);
+        verticalScrollBar->setOrientation(Qt::Vertical);
 
-        verticalLayout->addWidget(pushButton);
+        horizontalLayout_2->addWidget(verticalScrollBar);
 
-        verticalSpacer = new QSpacerItem(88, 198, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalScrollBar_2 = new QScrollBar(page);
+        verticalScrollBar_2->setObjectName(QString::fromUtf8("verticalScrollBar_2"));
+        verticalScrollBar_2->setMaximum(360);
+        verticalScrollBar_2->setOrientation(Qt::Vertical);
 
-        verticalLayout->addItem(verticalSpacer);
+        horizontalLayout_2->addWidget(verticalScrollBar_2);
 
-        toolBox->addItem(page, QString::fromUtf8("Page 1"));
+        verticalScrollBar_3 = new QScrollBar(page);
+        verticalScrollBar_3->setObjectName(QString::fromUtf8("verticalScrollBar_3"));
+        verticalScrollBar_3->setMaximum(360);
+        verticalScrollBar_3->setOrientation(Qt::Vertical);
+        verticalScrollBar_3->setInvertedAppearance(false);
+
+        horizontalLayout_2->addWidget(verticalScrollBar_3);
+
+        toolBox->addItem(page, QString::fromUtf8("Rotation"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 90, 283));
-        toolBox->addItem(page_2, QString::fromUtf8("Page 2"));
+        page_2->setGeometry(QRect(0, 0, 90, 250));
+        toolBox->addItem(page_2, QString::fromUtf8("Scaling"));
+        page_3 = new QWidget();
+        page_3->setObjectName(QString::fromUtf8("page_3"));
+        page_3->setGeometry(QRect(0, 0, 90, 250));
+        toolBox->addItem(page_3, QString::fromUtf8("Shift"));
 
         horizontalLayout->addWidget(toolBox);
 
-        graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        widget = new GLWidget(centralWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy2);
 
-        horizontalLayout->addWidget(graphicsView);
+        horizontalLayout->addWidget(widget);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -119,6 +144,9 @@ public:
 
         retranslateUi(MainWindow);
         QObject::connect(actionQuit, SIGNAL(activated()), MainWindow, SLOT(close()));
+        QObject::connect(verticalScrollBar_3, SIGNAL(valueChanged(int)), widget, SLOT(setZRot(int)));
+        QObject::connect(verticalScrollBar_2, SIGNAL(valueChanged(int)), widget, SLOT(setYRot(int)));
+        QObject::connect(verticalScrollBar, SIGNAL(valueChanged(int)), widget, SLOT(setXRot(int)));
 
         toolBox->setCurrentIndex(0);
 
@@ -128,11 +156,11 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Anaglyph Chemistry", 0, QApplication::UnicodeUTF8));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "Nejaky button", 0, QApplication::UnicodeUTF8));
-        toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Page 1", 0, QApplication::UnicodeUTF8));
-        toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "Page 2", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Rotation", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "Scaling", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page_3), QApplication::translate("MainWindow", "Shift", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

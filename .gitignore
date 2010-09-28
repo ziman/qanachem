@@ -2,3 +2,5 @@ stuff
 *.o
 *~
 qanachem
+moc_*
+ui_*

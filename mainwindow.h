@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <QtOpenGL>
 
 namespace Ui {
     class MainWindow;
@@ -18,6 +20,9 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void renderDemo();
 };
 
 #endif // MAINWINDOW_H

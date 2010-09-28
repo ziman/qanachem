@@ -2,5 +2,6 @@
     <qresource prefix="/icons">
         <file>icons/exit.png</file>
         <file>icons/exit.svgz</file>
+        <file>icons/DNA_icon.svg</file>
     </qresource>
 </RCC>
