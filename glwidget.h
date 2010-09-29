@@ -30,6 +30,10 @@ Q_OBJECT
     RenderMode renderMode;
 
     void renderImage();
+
+    void smallObject();
+    void largeObject();
+    void giantObject();
     void recacheObject();
 public:
     explicit GLWidget(QWidget *parent = 0);
@@ -45,8 +49,6 @@ protected:
 signals:
 
 public slots:
-     virtual void updateStuff();
-
      void setXRot(int value);
      void setYRot(int value);
      void setZRot(int value);

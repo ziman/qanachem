@@ -63,6 +63,7 @@ void GLWidget::setMoleculeSize(int size)
         renderMode = rmGiant; break;
     }
 
+    recacheObject();
     update();
 }
 
@@ -154,19 +155,8 @@ void GLWidget::setMolecule(const Molecule &molecule)
     update();
 }
 
-void GLWidget::updateStuff()
+void GLWidget::smallObject()
 {
-
-}
-
-void GLWidget::recacheObject()
-{
-    if (object)
-        glDeleteLists(object, 1);
-
-    object = glGenLists(1);
-    glNewList(object, GL_COMPILE);
-
     // draw bonds
     glColor3f(1,1,1);
     glBegin(GL_LINES);
@@ -202,6 +192,35 @@ void GLWidget::recacheObject()
             glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
         }
         glPopMatrix();
+    }
+}
+
+void GLWidget::largeObject()
+{
+
+}
+
+void GLWidget::giantObject()
+{
+
+}
+
+void GLWidget::recacheObject()
+{
+    if (object)
+        glDeleteLists(object, 1);
+
+    object = glGenLists(1);
+    glNewList(object, GL_COMPILE);
+
+    switch (renderMode)
+    {
+    case rmSmall:
+        smallObject(); break;
+    case rmLarge:
+        largeObject(); break;
+    case rmGiant:
+        giantObject(); break;
     }
 
     glEndList();
