@@ -9,6 +9,7 @@ GLWidget::GLWidget(QWidget *parent)
     xRot = yRot = zRot = 0;
     scale = 1;
     anaglyph = true;
+    eyeDistance = 100;
 
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
@@ -56,6 +57,12 @@ void GLWidget::setPaintAtoms(bool paintAtoms)
     update();
 }
 
+void GLWidget::setEyeDistance(int eyeDistance)
+{
+    this->eyeDistance = eyeDistance;
+    update();
+}
+
 GLWidget::~GLWidget()
 {
     makeCurrent();
@@ -97,16 +104,16 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    const double zShift = -7;
+    const double zShift = 7;
     if (anaglyph)
     {
-        const double xShift = 0.05;
-        const double convRot = 0.1;
+        const double xShift = 0.001 * eyeDistance;
+        const double convRot = 180 * atan(xShift/zShift) / 3.1415926536;
 
         // red image
         glLoadIdentity();
         glRotated(convRot, 0.0, 1.0, 0.0);
-        glTranslated(xShift, 0, zShift);
+        glTranslated(xShift, 0, -zShift);
         glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
         renderImage();
 
@@ -124,7 +131,7 @@ void GLWidget::paintGL()
     else
     {
         glLoadIdentity();
-        glTranslated(0, 0, zShift);
+        glTranslated(0, 0, -zShift);
         renderImage();
     }
 }

@@ -15,6 +15,7 @@ Q_OBJECT
     GLuint makeObject();
 
     int xRot, yRot, zRot;
+    int eyeDistance;
     double scale;
     double massCenterX, massCenterY;
     Molecule molecule;
@@ -48,6 +49,9 @@ public slots:
      void setScale(int value);
      void setAnaglyph(bool anaglyph);
      void setPaintAtoms(bool paintAtoms);
+
+     // default = 100
+     void setEyeDistance(int value);
 };
 
 #endif // GLWIDGET_H
