@@ -1,5 +1,5 @@
 #include "glwidget.h"
-
+#include "GL/glut.h"
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -106,14 +106,29 @@ GLuint GLWidget::makeObject()
     GLuint list = glGenLists(1);
     glNewList(list, GL_COMPILE);
 
+    // draw bonds
     glColor3f(1,1,1);
     glBegin(GL_LINES);
-    for (QList<Bond>::const_iterator it = molecule.bonds.begin(); it != molecule.bonds.end(); ++it)
+    foreach (Bond bond, molecule.bonds)
     {
-        glVertex3f(it->a->x, it->a->y, it->a->z);
-        glVertex3f(it->b->x, it->b->y, it->b->z);
+        glVertex3f(bond.a->x, bond.a->y, bond.a->z);
+        glVertex3f(bond.b->x, bond.b->y, bond.b->z);
     }
     glEnd();
+
+    // draw atoms
+    glColor3f(1,1,1);
+    const double fontScale = 0.005;
+    const double shift = 0.2;
+    foreach (Atom atom, molecule.atoms)
+    {
+        glPushMatrix();
+        glTranslated(atom.x - shift, atom.y - shift, atom.z);
+        glScaled(fontScale, fontScale, fontScale);
+        for (const char *p = atom.element.toLocal8Bit().data(); *p; p++)
+            glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
+        glPopMatrix();
+    }
 
     glEndList();
     return list;

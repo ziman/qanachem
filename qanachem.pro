@@ -4,6 +4,7 @@
 QT += opengl
 TARGET = qanachem
 TEMPLATE = app
+LIBS += -lglut
 SOURCES += main.cpp \
     mainwindow.cpp \
     glwidget.cpp \
