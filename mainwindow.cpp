@@ -20,7 +20,7 @@ void MainWindow::loadFile()
     QString fname = QFileDialog::getOpenFileName(this, "Load molecule", "molecules/", "MOL files (*.mol);;All files (*)");
     if (fname.isNull()) return;
 
-    ui->widget->setMolecule(Molecule(fname));
+    ui->display->setMolecule(Molecule(fname));
 }
 
 void MainWindow::changeEvent(QEvent *e)
