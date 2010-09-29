@@ -162,8 +162,39 @@ void GLWidget::smallObject()
     glBegin(GL_LINES);
     foreach (Bond bond, molecule.bonds)
     {
-        glVertex3f(bond.a->x, bond.a->y, bond.a->z);
-        glVertex3f(bond.b->x, bond.b->y, bond.b->z);
+        // for multiple bonds
+        const double dbondOfs = 0.05;
+        double dx = bond.a->y - bond.b->y;
+        double dy = bond.b->x - bond.a->x;
+        double dl = dbondOfs * sqrt(dx*dx + dy*dy);
+        dx *= dl; dy *= dl;
+
+        switch (bond.type)
+        {
+        case 2:
+            glVertex3f(bond.a->x + dx, bond.a->y + dy, bond.a->z);
+            glVertex3f(bond.b->x + dx, bond.b->y + dy, bond.b->z);
+
+            glVertex3f(bond.a->x - dx, bond.a->y - dy, bond.a->z);
+            glVertex3f(bond.b->x - dx, bond.b->y - dy, bond.b->z);
+            break;
+        case 3:
+            glVertex3f(bond.a->x, bond.a->y, bond.a->z);
+            glVertex3f(bond.b->x, bond.b->y, bond.b->z);
+
+            glVertex3f(bond.a->x + dx, bond.a->y + dy, bond.a->z);
+            glVertex3f(bond.b->x + dx, bond.b->y + dy, bond.b->z);
+
+            glVertex3f(bond.a->x - dx, bond.a->y - dy, bond.a->z);
+            glVertex3f(bond.b->x - dx, bond.b->y - dy, bond.b->z);
+            break;
+        case 1:
+        default:
+            glVertex3f(bond.a->x, bond.a->y, bond.a->z);
+            glVertex3f(bond.b->x, bond.b->y, bond.b->z);
+            break;
+        }
+
     }
     glEnd();
 
@@ -197,12 +228,55 @@ void GLWidget::smallObject()
 
 void GLWidget::largeObject()
 {
+    // draw bonds
+    glColor3f(1,1,1);
+    glBegin(GL_LINES);
+    foreach (Bond bond, molecule.bonds)
+    {
+        glVertex3f(bond.a->x, bond.a->y, bond.a->z);
+        glVertex3f(bond.b->x, bond.b->y, bond.b->z);
+    }
+    glEnd();
 
+    // draw atoms
+    glColor3f(1,1,1);
+    foreach (Atom atom, molecule.atoms)
+    {
+        glPushMatrix();
+
+        QMap<QString,QColor>::const_iterator it = elements.constFind(atom.element);
+        if (it != elements.end())
+        {
+            float mat[4] = {it->redF(), it->greenF(), it->blueF(), 1.0};
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
+            glTranslated(atom.x, atom.y, atom.z);
+            glutSolidSphere(0.3, 6, 4);
+        }
+        else
+        {
+            const double fontScale = 0.005;
+            const double shift = 0.2;
+
+            glTranslated(atom.x - shift, atom.y - shift, atom.z);
+            glScaled(fontScale, fontScale, fontScale);
+            for (const char *p = atom.element.toLocal8Bit().data(); *p; p++)
+            glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
+        }
+        glPopMatrix();
+    }
 }
 
 void GLWidget::giantObject()
 {
-
+    // draw bonds
+    glColor3f(1,1,1);
+    glBegin(GL_LINES);
+    foreach (Bond bond, molecule.bonds)
+    {
+        glVertex3f(bond.a->x, bond.a->y, bond.a->z);
+        glVertex3f(bond.b->x, bond.b->y, bond.b->z);
+    }
+    glEnd();
 }
 
 void GLWidget::recacheObject()
