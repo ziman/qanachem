@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QtOpenGL>
+#include <QTimer>
 
 namespace Ui {
     class MainWindow;
@@ -11,6 +12,7 @@ namespace Ui {
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -20,9 +22,11 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    QTimer * timer;
 
 public slots:
     virtual void loadFile();
+    virtual void tick();
 };
 
 #endif // MAINWINDOW_H

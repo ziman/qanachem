@@ -10,6 +10,7 @@ GLWidget::GLWidget(QWidget *parent)
     scale = 1;
     anaglyph = true;
     eyeDistance = 100;
+    renderMode = rmSmall;
 
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
@@ -50,9 +51,18 @@ void GLWidget::setAnaglyph(bool anaglyph)
     update();
 }
 
-void GLWidget::setPaintAtoms(bool paintAtoms)
+void GLWidget::setMoleculeSize(int size)
 {
-    this->paintAtoms = paintAtoms;
+    switch (size)
+    {
+    case 0:
+        renderMode = rmSmall; break;
+    case 1:
+        renderMode = rmLarge; break;
+    case 2: default:
+        renderMode = rmGiant; break;
+    }
+
     update();
 }
 

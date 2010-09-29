@@ -7,6 +7,13 @@
 
 #include "molecule.h"
 
+enum RenderMode
+{
+    rmSmall,
+    rmLarge,
+    rmGiant
+};
+
 class GLWidget : public QGLWidget
 {
 Q_OBJECT
@@ -20,6 +27,7 @@ Q_OBJECT
     bool anaglyph;
     bool paintAtoms;
     QMap<QString, QColor> elements;
+    RenderMode renderMode;
 
     void renderImage();
     void recacheObject();
@@ -46,7 +54,7 @@ public slots:
      // per cent
      void setScale(int value);
      void setAnaglyph(bool anaglyph);
-     void setPaintAtoms(bool paintAtoms);
+     void setMoleculeSize(int size);
 
      // default = 100
      void setEyeDistance(int value);
