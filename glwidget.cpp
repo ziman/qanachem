@@ -1,5 +1,6 @@
 #include "glwidget.h"
 #include "GL/glut.h"
+#include <QRgb>
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -10,6 +11,12 @@ GLWidget::GLWidget(QWidget *parent)
 
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
+
+    elements.insert("C", Qt::black);
+    elements.insert("H", Qt::white);
+    elements.insert("O", Qt::red);
+    elements.insert("N", Qt::green);
+    elements.insert("P", Qt::blue);
 }
 
 void GLWidget::setXRot(int value)
@@ -44,7 +51,8 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
-    qglClearColor(Qt::black);
+    qglClearColor(Qt::gray);
+
     object = makeObject();
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -54,7 +62,6 @@ void GLWidget::initializeGL()
     const float light_diffuse[4]  = { 1.0f, 1.0f, 1.0f, 1.0f };
     const float light_specular[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
@@ -85,10 +92,7 @@ void GLWidget::paintGL()
     glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
     renderImage(true);
 
-    // set blending
     glClear(GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE, GL_ONE);
 
     // cyan image
     glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -133,9 +137,12 @@ GLuint GLWidget::makeObject()
     foreach (Atom atom, molecule.atoms)
     {
         glPushMatrix();
-        bool knownColor = true;
-        if (knownColor)
+
+        QMap<QString,QColor>::const_iterator it = elements.constFind(atom.element);
+        if (it != elements.end())
         {
+            float mat[4] = {it->redF(), it->greenF(), it->blueF(), 1.0};
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
             glutSolidSphere(0.3, 12, 12);
         }

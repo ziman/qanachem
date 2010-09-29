@@ -3,6 +3,7 @@
 
 #include <QGLWidget>
 #include <QtOpenGL>
+#include <QMap>
 
 #include "molecule.h"
 
@@ -17,6 +18,8 @@ Q_OBJECT
     double scale;
     double massCenterX, massCenterY;
     Molecule molecule;
+
+    QMap<QString, QColor> elements;
 
     void renderImage(bool isLeft);
 public:
