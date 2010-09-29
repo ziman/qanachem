@@ -32,6 +32,7 @@ Molecule::Molecule(const QString &fname)
         atom.x = fields[0].toDouble();
         atom.y = fields[1].toDouble();
         atom.z = fields[2].toDouble();
+        atom.element = fields[3];
 
         atoms.append(atom);
     }

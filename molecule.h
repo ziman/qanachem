@@ -7,6 +7,7 @@
 struct Atom
 {
     double x, y, z;
+    QString element;
 };
 
 struct Bond
