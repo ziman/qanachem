@@ -21,7 +21,8 @@ protected:
 private:
     Ui::MainWindow *ui;
 
-private slots:
+public slots:
+    virtual void loadFile();
 };
 
 #endif // MAINWINDOW_H

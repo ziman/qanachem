@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -11,6 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadFile()
+{
+    QString fname = QFileDialog::getOpenFileName(this, "Load molecule", "molecules/", "MOL files (*.mol);;All files (*)");
+    if (fname.isNull()) return;
+
+    ui->widget->setMolecule(Molecule(fname));
 }
 
 void MainWindow::changeEvent(QEvent *e)

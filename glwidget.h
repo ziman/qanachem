@@ -18,6 +18,7 @@ Q_OBJECT
     double massCenterX, massCenterY;
     Molecule molecule;
 
+    void renderImage(bool isLeft);
 public:
     explicit GLWidget(QWidget *parent = 0);
     virtual ~GLWidget();

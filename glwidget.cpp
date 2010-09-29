@@ -1,11 +1,12 @@
 #include "glwidget.h"
 
+
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
 {
     object = 0;
     xRot = yRot = zRot = 0;
-    scale = 1.0;
+    scale = 0.3;
 
     Molecule mol("molecules/cyanocobalamin.mol");
     setMolecule(mol);
@@ -45,22 +46,43 @@ void GLWidget::initializeGL()
 {
     qglClearColor(Qt::black);
     object = makeObject();
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+}
+
+void GLWidget::renderImage(bool isLeft)
+{
+    double xShift = isLeft ? 0.05 : -0.05;
+
+    glLoadIdentity();
+    glTranslated(xShift, 0, -10.0);
+    glScaled(scale, scale, scale);
+    glRotated(zRot, 0.0, 0.0, 1.0);
+    glRotated(yRot, 0.0, 1.0, 0.0);
+    glRotated(xRot, 1.0, 0.0, 0.0);
+    glTranslated(-molecule.massCenterX, -molecule.massCenterY, -molecule.massCenterZ);
+    glCallList(object);
 }
 
 void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    glTranslated(0, 0, -10.0);
-    glScaled(scale, scale, scale);
-    glRotated(xRot, 1.0, 0.0, 0.0);
-    glRotated(yRot, 0.0, 1.0, 0.0);
-    glRotated(zRot, 0.0, 0.0, 1.0);
-    glTranslated(-molecule.massCenterX, -molecule.massCenterY, -molecule.massCenterZ);
-    glCallList(object);
+
+    // red image
+    glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
+    renderImage(true);
+
+    // set blending
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE);
+
+    // cyan image
+    glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
+    renderImage(false);
+
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 }
 
 void GLWidget::setMolecule(const Molecule &molecule)
