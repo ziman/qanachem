@@ -23,7 +23,7 @@ Q_OBJECT
 
     QMap<QString, QColor> elements;
 
-    void renderImage(double xShift);
+    void renderImage();
 public:
     explicit GLWidget(QWidget *parent = 0);
     virtual ~GLWidget();

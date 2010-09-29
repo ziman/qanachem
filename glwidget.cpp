@@ -83,10 +83,8 @@ void GLWidget::initializeGL()
     glEnable(GL_LIGHT0);        /* enable light 0 */
 }
 
-void GLWidget::renderImage(double xShift)
+void GLWidget::renderImage()
 {
-    glLoadIdentity();
-    glTranslated(xShift, 0, -10.0);
     glScaled(scale, scale, scale);
     glRotated(zRot, 0.0, 0.0, 1.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
@@ -99,25 +97,35 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    const double zShift = -7;
     if (anaglyph)
     {
         const double xShift = 0.05;
+        const double convRot = 0.1;
 
         // red image
+        glLoadIdentity();
+        glRotated(convRot, 0.0, 1.0, 0.0);
+        glTranslated(xShift, 0, zShift);
         glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
-        renderImage(xShift);
+        renderImage();
 
         glClear(GL_DEPTH_BUFFER_BIT);
 
         // cyan image
+        glLoadIdentity();
+        glRotated(-convRot, 0.0, 1.0, 0.0);
+        glTranslated(-xShift, 0, -7.0);
         glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
-        renderImage(-xShift);
+        renderImage();
 
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
     else
     {
-        renderImage(0.0);
+        glLoadIdentity();
+        glTranslated(0, 0, zShift);
+        renderImage();
     }
 }
 
@@ -164,7 +172,7 @@ GLuint GLWidget::makeObject()
             float mat[4] = {it->redF(), it->greenF(), it->blueF(), 1.0};
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
-            glutSolidSphere(0.3, 12, 12);
+            glutSolidSphere(0.3, 24, 12);
         }
         else
         {
@@ -190,6 +198,6 @@ void GLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45, ratio, 0.01, 1000);
+    gluPerspective(60, ratio, 0.01, 1000);
     glMatrixMode(GL_MODELVIEW);
 }
