@@ -53,7 +53,7 @@ Molecule::Molecule(const QString &fname)
         Bond bond;
         bond.a = &atoms[fields[0].toInt() - 1];
         bond.b = &atoms[fields[1].toInt() - 1];
-        bond.type = fields[3].toInt();
+        bond.type = fields[2].toInt();
 
         bonds.append(bond);
     }
