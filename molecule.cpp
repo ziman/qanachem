@@ -15,6 +15,7 @@ QStringList readFields(QFile & f)
 Molecule::Molecule(const QString &fname)
 {
     QFile f(fname);
+    f.open(QIODevice::ReadOnly);
     name = f.readLine();
     comment = f.readLine();
     f.readLine();
@@ -40,8 +41,8 @@ Molecule::Molecule(const QString &fname)
         QStringList fields = readFields(f);
 
         Bond bond;
-        bond.a = &atoms[fields[0].toInt()];
-        bond.b = &atoms[fields[1].toInt()];
+        bond.a = &atoms[fields[0].toInt() - 1];
+        bond.b = &atoms[fields[1].toInt() - 1];
         bond.type = fields[3].toInt();
 
         bonds.append(bond);

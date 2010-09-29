@@ -4,6 +4,8 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 
+#include "molecule.h"
+
 class GLWidget : public QGLWidget
 {
 Q_OBJECT
@@ -12,10 +14,13 @@ Q_OBJECT
     GLuint makeObject();
 
     int xRot, yRot, zRot;
+    Molecule molecule;
 
 public:
     explicit GLWidget(QWidget *parent = 0);
     virtual ~GLWidget();
+
+    void setMolecule(const Molecule & molecule);
 
 protected:
      virtual void initializeGL();

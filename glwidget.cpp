@@ -5,6 +5,8 @@ GLWidget::GLWidget(QWidget *parent)
 {
     object = 0;
     xRot = yRot = zRot = 0;
+    Molecule mol("molecules/cyanocobalamin.mol");
+    setMolecule(mol);
 }
 
 void GLWidget::setXRot(int value)
@@ -51,6 +53,17 @@ void GLWidget::paintGL()
     glCallList(object);
 }
 
+void GLWidget::setMolecule(const Molecule &molecule)
+{
+    this->molecule = molecule;
+    if (object)
+    {
+        glDeleteLists(object, 1);
+        object = makeObject();
+    }
+    update();
+}
+
 void GLWidget::updateStuff()
 {
 
@@ -63,8 +76,11 @@ GLuint GLWidget::makeObject()
 
     glColor3f(1,1,1);
     glBegin(GL_LINES);
-    glVertex3f(0, 0, 0); // origin of the line
-    glVertex3f(1, 1, 0); // ending point of the line
+    for (QList<Bond>::const_iterator it = molecule.bonds.begin(); it != molecule.bonds.end(); ++it)
+    {
+        glVertex3f(it->a->x, it->a->y, it->a->z);
+        glVertex3f(it->b->x, it->b->y, it->b->z);
+    }
     glEnd();
 
     glEndList();
