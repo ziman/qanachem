@@ -23,6 +23,8 @@ struct Molecule
     QList<Atom> atoms;
     QList<Bond> bonds;
 
+    double massCenterX, massCenterY, massCenterZ;
+
     Molecule();
     Molecule(const QString & fname);
 };

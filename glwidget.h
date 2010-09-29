@@ -14,6 +14,8 @@ Q_OBJECT
     GLuint makeObject();
 
     int xRot, yRot, zRot;
+    double scale;
+    double massCenterX, massCenterY;
     Molecule molecule;
 
 public:
@@ -39,6 +41,9 @@ public slots:
      void setXRot(int value);
      void setYRot(int value);
      void setZRot(int value);
+
+     // per cent
+     void setScale(int value);
 };
 
 #endif // GLWIDGET_H

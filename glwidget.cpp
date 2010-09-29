@@ -5,6 +5,8 @@ GLWidget::GLWidget(QWidget *parent)
 {
     object = 0;
     xRot = yRot = zRot = 0;
+    scale = 1.0;
+
     Molecule mol("molecules/cyanocobalamin.mol");
     setMolecule(mol);
 }
@@ -27,6 +29,12 @@ void GLWidget::setZRot(int value)
     update();
 }
 
+void GLWidget::setScale(int value)
+{
+    scale = value / 100.0;
+    update();
+}
+
 GLWidget::~GLWidget()
 {
     makeCurrent();
@@ -46,10 +54,12 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslated(0.0, 0.0, -10.0);
+    glTranslated(0, 0, -10.0);
+    glScaled(scale, scale, scale);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    glTranslated(-molecule.massCenterX, -molecule.massCenterY, -molecule.massCenterZ);
     glCallList(object);
 }
 
@@ -89,14 +99,11 @@ GLuint GLWidget::makeObject()
 
 void GLWidget::resizeGL(int width, int height)
 {
-    int side = qMin(width, height);
     double ratio = 1.0 * width / height;
-    glViewport((width - side) / 2, (height - side) / 2, side, side);
+    glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    // glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 15.0);
-    // glOrtho(-100, +100, +100, -100, 0.0, 1000.0);
     gluPerspective(45, ratio, 0.01, 1000);
     glMatrixMode(GL_MODELVIEW);
 }

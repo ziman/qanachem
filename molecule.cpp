@@ -5,6 +5,7 @@
 
 Molecule::Molecule()
 {
+    massCenterX = massCenterY = massCenterZ = 0;
 }
 
 QStringList readFields(QFile & f)
@@ -24,6 +25,7 @@ Molecule::Molecule(const QString &fname)
     int atomCnt = info[0].toInt();
     int bondCnt = info[1].toInt();
 
+    massCenterX = massCenterY = massCenterZ = 0;
     for (int i = 0; i < atomCnt; ++i)
     {
         QStringList fields = readFields(f);
@@ -35,7 +37,14 @@ Molecule::Molecule(const QString &fname)
         atom.element = fields[3];
 
         atoms.append(atom);
+
+        massCenterX += atom.x;
+        massCenterY += atom.y;
+        massCenterZ += atom.z;
     }
+    massCenterX /= atomCnt;
+    massCenterY /= atomCnt;
+    massCenterZ /= atomCnt;
 
     for (int i = 0; i < bondCnt; ++i)
     {

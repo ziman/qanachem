@@ -24,12 +24,18 @@
     <normaloff>:/icons/icons/DNA_icon.svg</normaloff>:/icons/icons/DNA_icon.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="margin">
+     <number>1</number>
+    </property>
+    <property name="spacing">
+     <number>1</number>
+    </property>
+    <item row="0" column="0" rowspan="2">
      <widget class="QToolBox" name="toolBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
+        <horstretch>1</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -42,8 +48,14 @@
          <x>0</x>
          <y>0</y>
          <width>90</width>
-         <height>250</height>
+         <height>266</height>
         </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <attribute name="label">
         <string>Rotation</string>
@@ -84,41 +96,106 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>90</width>
-         <height>250</height>
-        </rect>
-       </property>
+      <widget class="QWidget" name="page_5">
        <attribute name="label">
-        <string>Scaling</string>
+        <string>Options</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="text">
+           <string>Paint atoms</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>88</width>
+            <height>219</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
-      <widget class="QWidget" name="page_3">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>90</width>
-         <height>250</height>
-        </rect>
-       </property>
+      <widget class="QWidget" name="page_4">
        <attribute name="label">
-        <string>Shift</string>
+        <string>Information</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Atoms:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Bonds:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>88</width>
+            <height>205</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
-    <item>
+    <item row="0" column="1">
      <widget class="GLWidget" name="widget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
+        <horstretch>3</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QScrollBar" name="verticalScrollBar_4">
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="value">
+       <number>100</number>
+      </property>
+      <property name="sliderPosition">
+       <number>100</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
@@ -163,6 +240,7 @@
     <slot>setXRot(int)</slot>
     <slot>setYRot(int)</slot>
     <slot>setZRot(int)</slot>
+    <slot>setScale(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -209,8 +287,8 @@
    <slot>setYRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>114</y>
+     <x>46</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>124</x>
@@ -225,12 +303,28 @@
    <slot>setXRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>31</x>
-     <y>137</y>
+     <x>23</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>126</x>
      <y>136</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalScrollBar_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>setScale(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>587</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
