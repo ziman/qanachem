@@ -29,10 +29,6 @@ protected:
      virtual void initializeGL();
      virtual void paintGL();
      virtual void resizeGL(int width, int height);
-     /*
-     virtual void mousePressEvent(QMouseEvent *event);
-     virtual void mouseMoveEvent(QMouseEvent *event);
-     */
 
 signals:
 

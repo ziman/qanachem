@@ -49,6 +49,18 @@ void GLWidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+
+    const float light_ambient[4]  = { 0.2f, 0.2f, 0.2f, 1.0f };
+    const float light_diffuse[4]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+    const float light_specular[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glEnable(GL_LIGHTING);    /* enable lighting */
+    glEnable(GL_LIGHT0);        /* enable light 0 */
 }
 
 void GLWidget::renderImage(bool isLeft)
@@ -118,15 +130,25 @@ GLuint GLWidget::makeObject()
 
     // draw atoms
     glColor3f(1,1,1);
-    const double fontScale = 0.005;
-    const double shift = 0.2;
     foreach (Atom atom, molecule.atoms)
     {
         glPushMatrix();
-        glTranslated(atom.x - shift, atom.y - shift, atom.z);
-        glScaled(fontScale, fontScale, fontScale);
-        for (const char *p = atom.element.toLocal8Bit().data(); *p; p++)
+        bool knownColor = true;
+        if (knownColor)
+        {
+            glTranslated(atom.x, atom.y, atom.z);
+            glutSolidSphere(0.3, 12, 12);
+        }
+        else
+        {
+            const double fontScale = 0.005;
+            const double shift = 0.2;
+
+            glTranslated(atom.x - shift, atom.y - shift, atom.z);
+            glScaled(fontScale, fontScale, fontScale);
+            for (const char *p = atom.element.toLocal8Bit().data(); *p; p++)
             glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
+        }
         glPopMatrix();
     }
 
