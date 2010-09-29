@@ -8,6 +8,7 @@ GLWidget::GLWidget(QWidget *parent)
     object = 0;
     xRot = yRot = zRot = 0;
     scale = 1;
+    anaglyph = true;
 
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
@@ -43,6 +44,18 @@ void GLWidget::setScale(int value)
     update();
 }
 
+void GLWidget::setAnaglyph(bool anaglyph)
+{
+    this->anaglyph = anaglyph;
+    update();
+}
+
+void GLWidget::setPaintAtoms(bool paintAtoms)
+{
+    this->paintAtoms = paintAtoms;
+    update();
+}
+
 GLWidget::~GLWidget()
 {
     makeCurrent();
@@ -70,10 +83,8 @@ void GLWidget::initializeGL()
     glEnable(GL_LIGHT0);        /* enable light 0 */
 }
 
-void GLWidget::renderImage(bool isLeft)
+void GLWidget::renderImage(double xShift)
 {
-    double xShift = isLeft ? 0.05 : -0.05;
-
     glLoadIdentity();
     glTranslated(xShift, 0, -10.0);
     glScaled(scale, scale, scale);
@@ -88,17 +99,26 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // red image
-    glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
-    renderImage(true);
+    if (anaglyph)
+    {
+        const double xShift = 0.05;
 
-    glClear(GL_DEPTH_BUFFER_BIT);
+        // red image
+        glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
+        renderImage(xShift);
 
-    // cyan image
-    glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
-    renderImage(false);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        // cyan image
+        glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
+        renderImage(-xShift);
+
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    }
+    else
+    {
+        renderImage(0.0);
+    }
 }
 
 void GLWidget::setMolecule(const Molecule &molecule)

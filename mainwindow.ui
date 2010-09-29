@@ -20,7 +20,7 @@
    <string>Anaglyph Chemistry</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="resources.qrc">
     <normaloff>:/icons/icons/DNA_icon.svg</normaloff>:/icons/icons/DNA_icon.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -40,7 +40,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <property name="geometry">
@@ -113,6 +113,16 @@
          <widget class="QCheckBox" name="checkBox">
           <property name="text">
            <string>Paint atoms</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="text">
+           <string>Anaglyph</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -239,7 +249,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/exit.svgz</normaloff>:/icons/icons/exit.svgz</iconset>
    </property>
    <property name="text">
@@ -264,10 +274,14 @@
     <slot>setYRot(int)</slot>
     <slot>setZRot(int)</slot>
     <slot>setScale(int)</slot>
+    <slot>setAnaglyph(bool)</slot>
+    <slot>setPaintAtoms(bool)</slot>
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>
@@ -362,6 +376,38 @@
     <hint type="destinationlabel">
      <x>299</x>
      <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget</receiver>
+   <slot>setAnaglyph(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>135</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget</receiver>
+   <slot>setPaintAtoms(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>98</y>
     </hint>
    </hints>
   </connection>

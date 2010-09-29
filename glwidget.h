@@ -18,10 +18,12 @@ Q_OBJECT
     double scale;
     double massCenterX, massCenterY;
     Molecule molecule;
+    bool anaglyph;
+    bool paintAtoms;
 
     QMap<QString, QColor> elements;
 
-    void renderImage(bool isLeft);
+    void renderImage(double xShift);
 public:
     explicit GLWidget(QWidget *parent = 0);
     virtual ~GLWidget();
@@ -44,6 +46,8 @@ public slots:
 
      // per cent
      void setScale(int value);
+     void setAnaglyph(bool anaglyph);
+     void setPaintAtoms(bool paintAtoms);
 };
 
 #endif // GLWIDGET_H
