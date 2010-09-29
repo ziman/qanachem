@@ -6,8 +6,10 @@ TARGET = qanachem
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    molecule.cpp
 HEADERS += mainwindow.h \
-    glwidget.h
+    glwidget.h \
+    molecule.h
 FORMS += mainwindow.ui
 RESOURCES += resources.qrc

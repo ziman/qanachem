@@ -13,11 +13,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::renderDemo()
-{
-
-}
-
 void MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);

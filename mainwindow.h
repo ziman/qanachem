@@ -22,7 +22,6 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
-    void renderDemo();
 };
 
 #endif // MAINWINDOW_H
