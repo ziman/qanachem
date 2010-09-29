@@ -6,9 +6,9 @@ GLWidget::GLWidget(QWidget *parent)
 {
     object = 0;
     xRot = yRot = zRot = 0;
-    scale = 0.3;
+    scale = 1;
 
-    Molecule mol("molecules/cyanocobalamin.mol");
+    Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
 }
 
