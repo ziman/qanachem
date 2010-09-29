@@ -16,9 +16,8 @@ GLWidget::GLWidget(QWidget *parent)
 
     elements.insert("C", Qt::black);
     elements.insert("H", Qt::white);
-    elements.insert("O", Qt::red);
-    elements.insert("N", Qt::green);
-    elements.insert("P", Qt::blue);
+    elements.insert("O", Qt::blue);
+    elements.insert("N", Qt::darkGreen);
 }
 
 void GLWidget::setXRot(int value)
@@ -72,8 +71,8 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     qglClearColor(Qt::gray);
+    object = 0;
 
-    object = makeObject();
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -88,6 +87,8 @@ void GLWidget::initializeGL()
 
     glEnable(GL_LIGHTING);    /* enable lighting */
     glEnable(GL_LIGHT0);        /* enable light 0 */
+
+    recacheObject();
 }
 
 void GLWidget::renderImage()
@@ -139,11 +140,7 @@ void GLWidget::paintGL()
 void GLWidget::setMolecule(const Molecule &molecule)
 {
     this->molecule = molecule;
-    if (object)
-    {
-        glDeleteLists(object, 1);
-        object = makeObject();
-    }
+    recacheObject();
     update();
 }
 
@@ -152,10 +149,13 @@ void GLWidget::updateStuff()
 
 }
 
-GLuint GLWidget::makeObject()
+void GLWidget::recacheObject()
 {
-    GLuint list = glGenLists(1);
-    glNewList(list, GL_COMPILE);
+    if (object)
+        glDeleteLists(object, 1);
+
+    object = glGenLists(1);
+    glNewList(object, GL_COMPILE);
 
     // draw bonds
     glColor3f(1,1,1);
@@ -195,7 +195,6 @@ GLuint GLWidget::makeObject()
     }
 
     glEndList();
-    return list;
 }
 
 void GLWidget::resizeGL(int width, int height)

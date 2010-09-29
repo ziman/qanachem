@@ -12,8 +12,6 @@ class GLWidget : public QGLWidget
 Q_OBJECT
 
     GLuint object;
-    GLuint makeObject();
-
     int xRot, yRot, zRot;
     int eyeDistance;
     double scale;
@@ -21,10 +19,10 @@ Q_OBJECT
     Molecule molecule;
     bool anaglyph;
     bool paintAtoms;
-
     QMap<QString, QColor> elements;
 
     void renderImage();
+    void recacheObject();
 public:
     explicit GLWidget(QWidget *parent = 0);
     virtual ~GLWidget();
