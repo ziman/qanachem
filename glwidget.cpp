@@ -2,6 +2,8 @@
 #include "GL/glut.h"
 #include <QRgb>
 
+static const double PI = 3.1415926536;
+
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
 {
@@ -155,48 +157,57 @@ void GLWidget::setMolecule(const Molecule &molecule)
     update();
 }
 
+static void drawBond()
+{
+    glColor3f(0,0,0);
+    glRotatef(90, 0, 1, 0);
+    glutSolidCone(0.2, 1, 12, 6);
+}
+
+static inline double sqr(double x)
+{
+    return x*x;
+}
+
+static void stretchBond(const Atom &a, const Atom &b)
+{
+    double dXYZ = sqrt(sqr(a.x - b.x) + sqr(a.y - b.y) + sqr(a.z - b.z));
+    double dXZ = sqrt(sqr(a.x - b.x) + sqr(a.z - b.z));
+
+    /*
+    if (dXZ < 1.0e-8 || dXYZ < 1.0e-8)
+    {
+        glScalef(0,0,0);
+        return;
+    }
+    */
+
+    double dX = b.x - a.x;
+    double dY = b.y - a.y;
+    double dZ = b.z - a.z;
+
+    double phi = asin(dZ/dXZ);
+    if (dX < 0) phi = PI - phi;
+
+    double alpha = asin(dY/dXYZ);
+
+    glTranslatef(a.x, a.y, a.z);
+    glRotatef(phi*180/PI, 0, -1, 0);
+    glRotatef(alpha*180/PI, 0, 0, 1);
+    glScalef(dXYZ, 1, 1);
+}
+
 void GLWidget::smallObject()
 {
     // draw bonds
     glColor3f(1,1,1);
-    glBegin(GL_LINES);
     foreach (Bond bond, molecule.bonds)
     {
-        // for multiple bonds
-        const double dbondOfs = 0.05;
-        double dx = bond.a->y - bond.b->y;
-        double dy = bond.b->x - bond.a->x;
-        double dl = dbondOfs * sqrt(dx*dx + dy*dy);
-        dx *= dl; dy *= dl;
-
-        switch (bond.type)
-        {
-        case 2:
-            glVertex3f(bond.a->x + dx, bond.a->y + dy, bond.a->z);
-            glVertex3f(bond.b->x + dx, bond.b->y + dy, bond.b->z);
-
-            glVertex3f(bond.a->x - dx, bond.a->y - dy, bond.a->z);
-            glVertex3f(bond.b->x - dx, bond.b->y - dy, bond.b->z);
-            break;
-        case 3:
-            glVertex3f(bond.a->x, bond.a->y, bond.a->z);
-            glVertex3f(bond.b->x, bond.b->y, bond.b->z);
-
-            glVertex3f(bond.a->x + dx, bond.a->y + dy, bond.a->z);
-            glVertex3f(bond.b->x + dx, bond.b->y + dy, bond.b->z);
-
-            glVertex3f(bond.a->x - dx, bond.a->y - dy, bond.a->z);
-            glVertex3f(bond.b->x - dx, bond.b->y - dy, bond.b->z);
-            break;
-        case 1:
-        default:
-            glVertex3f(bond.a->x, bond.a->y, bond.a->z);
-            glVertex3f(bond.b->x, bond.b->y, bond.b->z);
-            break;
-        }
-
+        glPushMatrix();
+        stretchBond(*bond.a, *bond.b);
+        drawBond();
+        glPopMatrix();
     }
-    glEnd();
 
     // draw atoms
     glColor3f(1,1,1);
