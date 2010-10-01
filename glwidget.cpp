@@ -206,13 +206,11 @@ static void stretchBond(const Atom &a, const Atom &b)
     double dXYZ = sqrt(sqr(a.x - b.x) + sqr(a.y - b.y) + sqr(a.z - b.z));
     double dXZ = sqrt(sqr(a.x - b.x) + sqr(a.z - b.z));
 
-    /*
     if (dXZ < 1.0e-8 || dXYZ < 1.0e-8)
     {
         glScalef(0,0,0);
         return;
     }
-    */
 
     double dX = b.x - a.x;
     double dY = b.y - a.y;
