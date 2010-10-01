@@ -14,6 +14,14 @@ enum RenderMode
     rmGiant
 };
 
+struct Element
+{
+    double radius; // in angstroms
+    QColor color;
+
+    Element(double radius, QColor color);
+};
+
 class GLWidget : public QGLWidget
 {
 Q_OBJECT
@@ -26,7 +34,7 @@ Q_OBJECT
     Molecule molecule;
     bool anaglyph;
     bool paintAtoms;
-    QMap<QString, QColor> elements;
+    QMap<QString, Element> elements;
     RenderMode renderMode;
 
     void renderImage();

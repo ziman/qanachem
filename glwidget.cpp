@@ -5,6 +5,12 @@
 
 static const double PI = 3.1415926536;
 
+Element::Element(double radius, QColor color)
+{
+    this->radius = radius;
+    this->color = color;
+}
+
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
 {
@@ -18,10 +24,10 @@ GLWidget::GLWidget(QWidget *parent)
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
 
-    elements.insert("C", Qt::black);
-    elements.insert("H", Qt::white);
-    elements.insert("O", Qt::blue);
-    elements.insert("N", Qt::darkGreen);
+    elements.insert("C", Element(1.70, Qt::black));
+    elements.insert("H", Element(1.20, Qt::white));
+    elements.insert("O", Element(1.52, Qt::blue));
+    elements.insert("N", Element(1.55, Qt::darkGreen));
 }
 
 void GLWidget::setXRot(int value)
@@ -249,13 +255,14 @@ void GLWidget::smallObject()
     {
         glPushMatrix();
 
-        QMap<QString,QColor>::const_iterator it = elements.constFind(atom.element);
+        QMap<QString,Element>::const_iterator it = elements.constFind(atom.element);
         if (it != elements.end())
         {
-            float mat[4] = {it->redF(), it->greenF(), it->blueF(), 1.0};
+            float mat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
-            glutSolidSphere(0.3, 24, 12);
+            // glScaled(0.3, 0.3, 0.3);
+            glutSolidSphere(it->radius, 24, 12);
         }
         else
         {
@@ -289,18 +296,21 @@ void GLWidget::largeObject()
     {
         glPushMatrix();
 
-        QMap<QString,QColor>::const_iterator it = elements.constFind(atom.element);
+        QMap<QString,Element>::const_iterator it = elements.constFind(atom.element);
         if (it != elements.end())
         {
-            float mat[4] = {it->redF(), it->greenF(), it->blueF(), 1.0};
+            float mat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
-            glutSolidSphere(0.3, 6, 4);
+            glScaled(0.3, 0.3, 0.3);
+            glutSolidSphere(it->radius, 24, 12);
         }
         else
         {
             const double fontScale = 0.005;
             const double shift = 0.2;
+
+            this->renderText(atom.x, atom.y, atom.z, atom.element, QFont("Sans", 1));
 
             glTranslated(atom.x - shift, atom.y - shift, atom.z);
             glScaled(fontScale, fontScale, fontScale);
