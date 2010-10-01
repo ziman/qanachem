@@ -13,6 +13,18 @@ QStringList readFields(QFile & f)
     return QString(f.readLine()).split(' ', QString::SkipEmptyParts);
 }
 
+static BondType int2bt(int type)
+{
+    switch(type)
+    {
+    case 1: return btSingle;
+    case 2: return btDouble;
+    case 3: return btTriple;
+    case 4: return btAromatic;
+    default: return btNone;
+    }
+}
+
 Molecule::Molecule(const QString &fname)
 {
     QFile f(fname);
@@ -53,7 +65,7 @@ Molecule::Molecule(const QString &fname)
         Bond bond;
         bond.a = &atoms[fields[0].toInt() - 1];
         bond.b = &atoms[fields[1].toInt() - 1];
-        bond.type = (BondType) fields[2].toInt();
+        bond.type = int2bt(fields[2].toInt());
 
         bonds.append(bond);
     }

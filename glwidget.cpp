@@ -166,15 +166,16 @@ static void drawBond(BondType type)
     static const double tripleBondRadius = 0.04;
     static const double bondDistanceC = 1.75;
 
+    glRotatef(90, 1, 0, 0);
+    glRotatef(90, 0, 1, 0);
+
     switch (type)
     {
     case btSingle:
-        glRotatef(90, 0, 1, 0);
         gluCylinder(quad, singleBondRadius, singleBondRadius, 1, 12, 4);
         break;
 
     case btDouble:
-        glRotatef(90, 0, 1, 0);
         glTranslatef(-bondDistanceC*doubleBondRadius,0,0);
         gluCylinder(quad, doubleBondRadius, doubleBondRadius, 1, 12, 4);
         glTranslatef(2*bondDistanceC*doubleBondRadius,0,0);
@@ -182,7 +183,6 @@ static void drawBond(BondType type)
         break;
 
     case btTriple:
-        glRotatef(90, 0, 1, 0);
         gluCylinder(quad, tripleBondRadius, tripleBondRadius, 1, 12, 4);
         glTranslatef(-1.5*bondDistanceC*tripleBondRadius,0,0);
         gluCylinder(quad, tripleBondRadius, tripleBondRadius, 1, 12, 4);
@@ -191,7 +191,6 @@ static void drawBond(BondType type)
         break;
 
     default:
-        glRotatef(90, 0, 1, 0);
         gluCylinder(quad, singleBondRadius, singleBondRadius, 1, 12, 4);
         break;
     }
