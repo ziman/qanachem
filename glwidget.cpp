@@ -1,5 +1,6 @@
 #include "glwidget.h"
 #include "GL/glut.h"
+#include "GL/glu.h"
 #include <QRgb>
 
 static const double PI = 3.1415926536;
@@ -157,11 +158,43 @@ void GLWidget::setMolecule(const Molecule &molecule)
     update();
 }
 
-static void drawBond()
+static void drawBond(BondType type)
 {
-    glColor3f(0,0,0);
-    glRotatef(90, 0, 1, 0);
-    glutSolidCone(0.2, 1, 12, 6);
+    static GLUquadric *quad = gluNewQuadric();
+    static const double singleBondRadius = 0.07;
+    static const double doubleBondRadius = 0.05;
+    static const double tripleBondRadius = 0.04;
+    static const double bondDistanceC = 1.75;
+
+    switch (type)
+    {
+    case btSingle:
+        glRotatef(90, 0, 1, 0);
+        gluCylinder(quad, singleBondRadius, singleBondRadius, 1, 12, 4);
+        break;
+
+    case btDouble:
+        glRotatef(90, 0, 1, 0);
+        glTranslatef(-bondDistanceC*doubleBondRadius,0,0);
+        gluCylinder(quad, doubleBondRadius, doubleBondRadius, 1, 12, 4);
+        glTranslatef(2*bondDistanceC*doubleBondRadius,0,0);
+        gluCylinder(quad, doubleBondRadius, doubleBondRadius, 1, 12, 4);
+        break;
+
+    case btTriple:
+        glRotatef(90, 0, 1, 0);
+        gluCylinder(quad, tripleBondRadius, tripleBondRadius, 1, 12, 4);
+        glTranslatef(-1.5*bondDistanceC*tripleBondRadius,0,0);
+        gluCylinder(quad, tripleBondRadius, tripleBondRadius, 1, 12, 4);
+        glTranslatef(3*bondDistanceC*tripleBondRadius,0,0);
+        gluCylinder(quad, tripleBondRadius, tripleBondRadius, 1, 12, 4);
+        break;
+
+    default:
+        glRotatef(90, 0, 1, 0);
+        gluCylinder(quad, singleBondRadius, singleBondRadius, 1, 12, 4);
+        break;
+    }
 }
 
 static inline double sqr(double x)
@@ -205,7 +238,7 @@ void GLWidget::smallObject()
     {
         glPushMatrix();
         stretchBond(*bond.a, *bond.b);
-        drawBond();
+        drawBond(bond.type);
         glPopMatrix();
     }
 

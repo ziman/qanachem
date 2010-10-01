@@ -4,6 +4,15 @@
 #include <QString>
 #include <QList>
 
+enum BondType
+{
+    btNone,
+    btSingle,
+    btDouble,
+    btTriple,
+    btAromatic
+};
+
 struct Atom
 {
     double x, y, z;
@@ -13,7 +22,7 @@ struct Atom
 struct Bond
 {
     Atom *a, *b;
-    int type;
+    BondType type;
 };
 
 struct Molecule
