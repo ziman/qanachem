@@ -230,7 +230,6 @@ static void stretchBond(const Atom &a, const Atom &b)
 void GLWidget::smallObject()
 {
     // draw bonds
-    glColor3f(1,1,1);
     foreach (Bond bond, molecule.bonds)
     {
         glPushMatrix();
@@ -240,7 +239,6 @@ void GLWidget::smallObject()
     }
 
     // draw atoms
-    glColor3f(1,1,1);
     foreach (Atom atom, molecule.atoms)
     {
         glPushMatrix();
