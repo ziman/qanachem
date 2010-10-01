@@ -213,7 +213,7 @@ static void stretchBond(const Atom &a, const Atom &b)
     }
 
     double phi = 0;
-    double alpha = -PI/2;
+    double alpha = (b.y > a.y) ? PI/2 : -PI/2;
 
     if (dXZ > 1.0e-8)
     {
@@ -238,12 +238,6 @@ void GLWidget::smallObject()
     // draw bonds
     foreach (Bond bond, molecule.bonds)
     {
-        glColor3f(1,1,1);
-        glBegin(GL_LINES);
-        glVertex3f(bond.a->x, bond.a->y, bond.a->z);
-        glVertex3f(bond.b->x, bond.b->y, bond.b->z);
-        glEnd();
-
         glPushMatrix();
         stretchBond(*bond.a, *bond.b);
         drawBond(bond.type);

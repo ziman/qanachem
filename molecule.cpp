@@ -21,6 +21,8 @@ static BondType int2bt(int type)
     case 2: return btDouble;
     case 3: return btTriple;
     case 4: return btAromatic;
+    case 6: return btSingle; // or Aromatic
+    case 7: return btDouble; // or Aromatic
     default: return btNone;
     }
 }
