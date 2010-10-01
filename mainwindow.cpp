@@ -31,6 +31,15 @@ void MainWindow::tick()
     if (ui->cbZ->isChecked()) advance(ui->sbZ, step);
 }
 
+void MainWindow::saveView()
+{
+    QString fname = QFileDialog::getSaveFileName(this, "Save view as image", "snapshots/", "PNG files (*.png);;All files (*)");
+    if (fname.isNull()) return;
+
+    QImage img = ui->display->grabFrameBuffer(false);
+    img.save(fname, "PNG", 0);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;

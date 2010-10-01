@@ -27,6 +27,7 @@ private:
 public slots:
     virtual void loadFile();
     virtual void tick();
+    virtual void saveView();
 };
 
 #endif // MAINWINDOW_H

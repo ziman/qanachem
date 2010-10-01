@@ -57,6 +57,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen_file"/>
+    <addaction name="actionSave_snapshot"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -272,6 +273,11 @@
     <string>Load molecule...</string>
    </property>
   </action>
+  <action name="actionSave_snapshot">
+   <property name="text">
+    <string>Save snapshot...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -334,8 +340,8 @@
    <slot>setYRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>39</x>
-     <y>97</y>
+     <x>57</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -366,8 +372,8 @@
    <slot>setScale(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>100</y>
+     <x>119</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>567</x>
@@ -399,7 +405,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>50</x>
-     <y>478</y>
+     <y>510</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -415,7 +421,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>80</x>
-     <y>409</y>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>306</x>
@@ -431,7 +437,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>105</x>
-     <y>453</y>
+     <y>483</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
@@ -439,8 +445,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSave_snapshot</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadFile()</slot>
+  <slot>saveView()</slot>
  </slots>
 </ui>
