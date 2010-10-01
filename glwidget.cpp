@@ -5,6 +5,23 @@
 
 static const double PI = 3.1415926536;
 
+struct ElmRec { QString name; Element elm; };
+
+ElmRec elemRec[] = {
+    { "C",  Element(1.70, Qt::black) },
+    { "H",  Element(1.20, Qt::white) },
+    { "O",  Element(1.52, Qt::red) },
+    { "N",  Element(1.55, Qt::blue) },
+    { "P",  Element(1.80, Qt::magenta) },
+    { "Co", Element(2.52, Qt::yellow) },
+    { "S",  Element(1.80, Qt::yellow) },
+    { "F",  Element(1.47, Qt::darkGreen) },
+    { "Cl", Element(1.75, Qt::darkGreen) },
+    { "Br", Element(1.85, Qt::red) },
+    { "I",  Element(1.98, Qt::magenta) },
+    { QString::null, Element(0, Qt::black) },
+};
+
 Element::Element(double radius, QColor color)
 {
     this->radius = radius;
@@ -25,12 +42,8 @@ GLWidget::GLWidget(QWidget *parent)
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
 
-    elements.insert("C", Element(1.70, Qt::black));
-    elements.insert("H", Element(1.20, Qt::white));
-    elements.insert("O", Element(1.52, Qt::blue));
-    elements.insert("N", Element(1.55, Qt::darkGreen));
-    elements.insert("P", Element(1.80, Qt::yellow));
-    elements.insert("Co", Element(2.52, Qt::cyan));
+    for (ElmRec * p = elemRec; !p->name.isNull(); ++p)
+        elements.insert(p->name, p->elm);
 }
 
 void GLWidget::setXRot(int value)
