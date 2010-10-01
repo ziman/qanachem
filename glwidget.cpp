@@ -30,6 +30,7 @@ GLWidget::GLWidget(QWidget *parent)
     elements.insert("O", Element(1.52, Qt::blue));
     elements.insert("N", Element(1.55, Qt::darkGreen));
     elements.insert("P", Element(1.80, Qt::yellow));
+    elements.insert("Co", Element(2.52, Qt::cyan));
 }
 
 void GLWidget::setXRot(int value)
