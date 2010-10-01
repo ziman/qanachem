@@ -29,6 +29,7 @@ Q_OBJECT
     GLuint object;
     int xRot, yRot, zRot;
     int eyeDistance;
+    double atomSizeScale;
     double scale;
     double massCenterX, massCenterY;
     Molecule molecule;
@@ -63,6 +64,7 @@ public slots:
 
      // per cent
      void setScale(int value);
+     void setAtomSizeScale(int value);
      void setAnaglyph(bool anaglyph);
      void setMoleculeSize(int size);
 

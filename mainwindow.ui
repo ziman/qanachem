@@ -208,6 +208,35 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Atom size scale:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_2">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>25</number>
+       </property>
+       <property name="sliderPosition">
+        <number>25</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>25</number>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Molecule size:</string>
@@ -294,6 +323,7 @@
     <slot>setAnaglyph(bool)</slot>
     <slot>setEyeDistance(int)</slot>
     <slot>setMoleculeSize(int)</slot>
+    <slot>setAtomSizeScale(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -405,7 +435,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>50</x>
-     <y>510</y>
+     <y>572</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -437,7 +467,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>105</x>
-     <y>483</y>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
@@ -458,6 +488,22 @@
     <hint type="destinationlabel">
      <x>403</x>
      <y>306</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>display</receiver>
+   <slot>setAtomSizeScale(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>163</x>
+     <y>481</y>
     </hint>
    </hints>
   </connection>

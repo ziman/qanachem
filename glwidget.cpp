@@ -17,6 +17,7 @@ GLWidget::GLWidget(QWidget *parent)
     object = 0;
     xRot = yRot = zRot = 0;
     scale = 1;
+    atomSizeScale = 0.25;
     anaglyph = true;
     eyeDistance = 100;
     renderMode = rmSmall;
@@ -28,6 +29,7 @@ GLWidget::GLWidget(QWidget *parent)
     elements.insert("H", Element(1.20, Qt::white));
     elements.insert("O", Element(1.52, Qt::blue));
     elements.insert("N", Element(1.55, Qt::darkGreen));
+    elements.insert("P", Element(1.80, Qt::yellow));
 }
 
 void GLWidget::setXRot(int value)
@@ -51,6 +53,13 @@ void GLWidget::setZRot(int value)
 void GLWidget::setScale(int value)
 {
     scale = value / 100.0;
+    update();
+}
+
+void GLWidget::setAtomSizeScale(int value)
+{
+    atomSizeScale = value / 100.0;
+    recacheObject();
     update();
 }
 
@@ -261,8 +270,7 @@ void GLWidget::smallObject()
             float mat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
-            // glScaled(0.3, 0.3, 0.3);
-            glutSolidSphere(it->radius, 24, 12);
+            glutSolidSphere(it->radius * atomSizeScale, 24, 12);
         }
         else
         {
