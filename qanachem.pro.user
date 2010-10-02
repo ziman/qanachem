@@ -76,7 +76,6 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">COIN_DONT_INFORM_INDIRECT_RENDERING=1</value>
     <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-InzPkFUV7q,guid=050ae171eefd9ba256737069000000e8</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -137,7 +136,6 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">COIN_DONT_INFORM_INDIRECT_RENDERING=1</value>
     <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-InzPkFUV7q,guid=050ae171eefd9ba256737069000000e8</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>

@@ -2,6 +2,7 @@
 #include <QFile>
 #include <iostream>
 #include <QStringList>
+#include <QDebug>
 
 Molecule::Molecule()
 {
@@ -10,7 +11,16 @@ Molecule::Molecule()
 
 QStringList readFields(QFile & f)
 {
-    return QString(f.readLine()).split(' ', QString::SkipEmptyParts);
+    QStringList result = QString(f.readLine()).split(' ', QString::SkipEmptyParts);
+
+    int r0 = result[0].toInt();
+    if (r0 > 1000)
+    {
+        result[0] = QString::number(r0 / 1000);
+        result.insert(1, QString::number(r0 % 1000));
+    }
+
+    return result;
 }
 
 static BondType int2bt(int type)
@@ -38,6 +48,7 @@ Molecule::Molecule(const QString &fname)
     QStringList info = readFields(f);
     int atomCnt = info[0].toInt();
     int bondCnt = info[1].toInt();
+    qDebug() << atomCnt << " " << bondCnt << endl;
 
     massCenterX = massCenterY = massCenterZ = 0;
     for (int i = 0; i < atomCnt; ++i)
@@ -65,6 +76,7 @@ Molecule::Molecule(const QString &fname)
         QStringList fields = readFields(f);
 
         Bond bond;
+        // qDebug() << i << ": " << fields << endl;
         bond.a = &atoms[fields[0].toInt() - 1];
         bond.b = &atoms[fields[1].toInt() - 1];
         bond.type = int2bt(fields[2].toInt());

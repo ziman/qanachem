@@ -47,10 +47,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadFile()
 {
-    QString fname = QFileDialog::getOpenFileName(this, "Load molecule", "molecules/", "MOL files (*.mol);;All files (*)");
+    QString fname = QFileDialog::getOpenFileName(this, "Load molecule", "molecules/", "MOL/SDF files (*.mol *.sdf);;All files (*)");
     if (fname.isNull()) return;
 
-    ui->display->setMolecule(Molecule(fname));
+    try {
+        ui->display->setMolecule(Molecule(fname));
+    } catch (...) {
+        QMessageBox::critical(this, "Load molecule", "Unable to load " + fname + ".");
+    }
 }
 
 void MainWindow::changeEvent(QEvent *e)
