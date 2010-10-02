@@ -48,7 +48,6 @@ Molecule::Molecule(const QString &fname)
     QStringList info = readFields(f);
     int atomCnt = info[0].toInt();
     int bondCnt = info[1].toInt();
-    qDebug() << atomCnt << " " << bondCnt << endl;
 
     massCenterX = massCenterY = massCenterZ = 0;
     for (int i = 0; i < atomCnt; ++i)
