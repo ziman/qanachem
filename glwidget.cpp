@@ -54,11 +54,11 @@ void GLWidget::mousePressEvent(QMouseEvent * e)
     switch (e->button())
     {
     case Qt::LeftButton:
-        mousingMode = mmPan;
+        mousingMode = mmRotate;
         break;
 
     case Qt::RightButton:
-        mousingMode = mmRotate;
+        mousingMode = mmPan;
         break;
 
     default:
