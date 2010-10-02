@@ -14,6 +14,13 @@ enum RenderMode
     rmGiant
 };
 
+enum MousingMode
+{
+    mmNone,
+    mmPan,
+    mmRotate
+};
+
 struct Element
 {
     double radius; // in angstroms
@@ -39,6 +46,7 @@ Q_OBJECT
     QMap<QString, Element> elements;
     RenderMode renderMode;
     double panX, panY, panZ;
+    MousingMode mousingMode;
     QPoint panMousePos;
 
     void renderImage();

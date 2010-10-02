@@ -40,6 +40,7 @@ GLWidget::GLWidget(QWidget *parent)
     anaglyph = true;
     eyeDistance = 100;
     renderMode = rmSmall;
+    mousingMode = mmNone;
 
     Molecule mol("molecules/thujone.mol");
     setMolecule(mol);
@@ -50,25 +51,49 @@ GLWidget::GLWidget(QWidget *parent)
 
 void GLWidget::mousePressEvent(QMouseEvent * e)
 {
-    if (e->button() == Qt::LeftButton)
-        panMousePos = e->globalPos();
+    switch (e->button())
+    {
+    case Qt::LeftButton:
+        mousingMode = mmPan;
+        break;
+
+    case Qt::RightButton:
+        mousingMode = mmRotate;
+        break;
+
+    default:
+        mousingMode = mmNone;
+        break;
+    }
+
+    panMousePos = e->globalPos();
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent * e)
 {
-    if (e->button() == Qt::LeftButton)
-        panMousePos = QPoint();
+    mousingMode = mmNone;
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent * e)
 {
-    if (!panMousePos.isNull())
+    if (mousingMode != mmNone)
     {
-        double scale = 0.01;
-        panX -= scale * (e->globalPos().x() - panMousePos.x());
-        panY += scale * (e->globalPos().y() - panMousePos.y());
-
+        int dX = e->globalPos().x() - panMousePos.x();
+        int dY = e->globalPos().y() - panMousePos.y();
         panMousePos = e->globalPos();
+
+        switch (mousingMode)
+        {
+        case mmPan:
+            panX -= 0.01 * dX;
+            panY += 0.01 * dY;
+            break;
+        case mmRotate:
+            yRot += dX;
+            xRot += dY;
+            break;
+        }
+
         update();
     }
 }
@@ -181,9 +206,9 @@ void GLWidget::initializeGL()
 void GLWidget::renderImage()
 {
     glScaled(scale, scale, scale);
-    glRotated(zRot, 0.0, 0.0, 1.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(xRot, 1.0, 0.0, 0.0);
+    glRotated(zRot, 0.0, 0.0, 1.0);
     glTranslated(-molecule.massCenterX, -molecule.massCenterY, -molecule.massCenterZ);
     glCallList(object);
 }
