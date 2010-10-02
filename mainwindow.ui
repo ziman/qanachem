@@ -61,7 +61,15 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuPanels">
+    <property name="title">
+     <string>Panels</string>
+    </property>
+    <addaction name="actionDisplay_control"/>
+    <addaction name="actionColor_map"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPanels"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
@@ -76,6 +84,9 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="margin">
+      <number>5</number>
+     </property>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -288,6 +299,43 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="windowTitle">
+    <string>Color map</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="margin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QListWidget" name="colorMap">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionQuit">
    <property name="icon">
     <iconset resource="resources.qrc">
@@ -305,6 +353,25 @@
   <action name="actionSave_snapshot">
    <property name="text">
     <string>Save snapshot...</string>
+   </property>
+  </action>
+  <action name="actionDisplay_control">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Display control</string>
+   </property>
+  </action>
+  <action name="actionColor_map">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Color map</string>
    </property>
   </action>
  </widget>
@@ -370,8 +437,8 @@
    <slot>setYRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>141</y>
+     <x>55</x>
+     <y>181</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -386,8 +453,8 @@
    <slot>setXRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>23</x>
-     <y>129</y>
+     <x>21</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>299</x>
@@ -434,8 +501,8 @@
    <slot>setAnaglyph(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>572</y>
+     <x>46</x>
+     <y>558</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -450,8 +517,8 @@
    <slot>setEyeDistance(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>435</y>
+     <x>76</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
      <x>306</x>
@@ -466,8 +533,8 @@
    <slot>setMoleculeSize(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>545</y>
+     <x>101</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
@@ -507,9 +574,90 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateColorMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>546</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>131</x>
+     <y>590</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDisplay_control</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>64</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionColor_map</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockWidget_2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>744</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionDisplay_control</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dockWidget_2</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionColor_map</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>744</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadFile()</slot>
   <slot>saveView()</slot>
+  <slot>updateColorMap()</slot>
  </slots>
 </ui>

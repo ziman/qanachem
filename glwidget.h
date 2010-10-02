@@ -18,8 +18,9 @@ struct Element
 {
     double radius; // in angstroms
     QColor color;
+    QColor anaColor;
 
-    Element(double radius, QColor color);
+    Element(double radius, QColor color, QColor anaColor = QColor::Invalid);
 };
 
 class GLWidget : public QGLWidget
@@ -49,6 +50,8 @@ public:
     virtual ~GLWidget();
 
     void setMolecule(const Molecule & molecule);
+    const Molecule & getMolecule();
+    const QMap<QString, Element> & elementMap();
 
 protected:
      virtual void initializeGL();

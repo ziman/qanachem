@@ -8,10 +8,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->dockWidget_2->hide();
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer->start(50);
+
+    updateColorMap();
+}
+
+void MainWindow::updateColorMap()
+{
+    ui->colorMap->clear();
+    QSet<QString> added;
+    foreach (Atom atom, ui->display->getMolecule().atoms)
+    {
+        if (added.contains(atom.element)) continue;
+        added.insert(atom.element);
+
+        QMap<QString,Element>::const_iterator it = ui->display->elementMap().find(atom.element);
+        if (it == ui->display->elementMap().end()) continue;
+
+        QListWidgetItem * item = new QListWidgetItem(atom.element, ui->colorMap);
+        item->setBackgroundColor(ui->checkBox_2->isChecked() ? it->anaColor : it->color);
+    }
 }
 
 void advance(QScrollBar * sb, int step)
@@ -65,6 +85,7 @@ void MainWindow::loadFile()
         if (count > 1000) mode = 2;
 
         ui->comboBox->setCurrentIndex(mode);
+        updateColorMap();
     } catch (...) {
         QMessageBox::critical(this, "Load molecule", "Unable to load " + fname + ".");
     }

@@ -10,7 +10,7 @@ struct ElmRec { QString name; Element elm; };
 ElmRec elemRec[] = {
     { "C",  Element(1.70, Qt::black) },
     { "H",  Element(1.20, Qt::white) },
-    { "O",  Element(1.52, Qt::red) },
+    { "O",  Element(1.52, Qt::red, Qt::darkCyan) },
     { "N",  Element(1.55, Qt::blue) },
     { "P",  Element(1.80, Qt::magenta) },
     { "Co", Element(2.52, Qt::yellow) },
@@ -22,10 +22,11 @@ ElmRec elemRec[] = {
     { QString::null, Element(0, Qt::black) },
 };
 
-Element::Element(double radius, QColor color)
+Element::Element(double radius, QColor color, QColor anaColor)
 {
     this->radius = radius;
     this->color = color;
+    this->anaColor = anaColor.isValid() ? anaColor : color;
 }
 
 GLWidget::GLWidget(QWidget *parent)
@@ -44,6 +45,16 @@ GLWidget::GLWidget(QWidget *parent)
 
     for (ElmRec * p = elemRec; !p->name.isNull(); ++p)
         elements.insert(p->name, p->elm);
+}
+
+const QMap<QString, Element> & GLWidget::elementMap()
+{
+    return elements;
+}
+
+const Molecule & GLWidget::getMolecule()
+{
+    return molecule;
 }
 
 void GLWidget::setXRot(int value)
@@ -80,6 +91,7 @@ void GLWidget::setAtomSizeScale(int value)
 void GLWidget::setAnaglyph(bool anaglyph)
 {
     this->anaglyph = anaglyph;
+    recacheObject();
     update();
 }
 
@@ -327,8 +339,10 @@ void GLWidget::smallObject(RenderMode renderMode)
         QMap<QString,Element>::const_iterator it = elements.constFind(atom.element);
         if (it != elements.end())
         {
-            float mat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
-            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
+            float normalMat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
+            float anaglyphMat[4] = {it->anaColor.redF(), it->anaColor.greenF(), it->anaColor.blueF(), 1.0};
+
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, anaglyph ? anaglyphMat : normalMat);
             glTranslated(atom.x, atom.y, atom.z);
             switch (renderMode)
             {

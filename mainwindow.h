@@ -28,6 +28,7 @@ public slots:
     virtual void loadFile();
     virtual void tick();
     virtual void saveView();
+    virtual void updateColorMap();
 };
 
 #endif // MAINWINDOW_H
