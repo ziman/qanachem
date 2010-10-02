@@ -50,14 +50,27 @@ GLWidget::GLWidget(QWidget *parent)
 
 void GLWidget::mousePressEvent(QMouseEvent * e)
 {
+    if (e->button() == Qt::LeftButton)
+        panMousePos = e->globalPos();
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent * e)
 {
+    if (e->button() == Qt::LeftButton)
+        panMousePos = QPoint();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent * e)
 {
+    if (!panMousePos.isNull())
+    {
+        double scale = 0.01;
+        panX -= scale * (e->globalPos().x() - panMousePos.x());
+        panY += scale * (e->globalPos().y() - panMousePos.y());
+
+        panMousePos = e->globalPos();
+        update();
+    }
 }
 
 void GLWidget::wheelEvent(QWheelEvent * e)

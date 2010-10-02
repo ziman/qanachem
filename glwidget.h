@@ -39,6 +39,7 @@ Q_OBJECT
     QMap<QString, Element> elements;
     RenderMode renderMode;
     double panX, panY, panZ;
+    QPoint panMousePos;
 
     void renderImage();
 
