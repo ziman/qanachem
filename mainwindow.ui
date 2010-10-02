@@ -457,8 +457,8 @@
    <slot>setYRot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>55</x>
-     <y>181</y>
+     <x>53</x>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -489,8 +489,8 @@
    <slot>setScale(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>144</y>
+     <x>115</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>567</x>
@@ -719,6 +719,22 @@
     <hint type="destinationlabel">
      <x>85</x>
      <y>295</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>display</sender>
+   <signal>scaleChanged(int)</signal>
+   <receiver>sbS</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>156</x>
+     <y>324</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>107</x>
+     <y>320</y>
     </hint>
    </hints>
   </connection>
