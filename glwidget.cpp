@@ -74,12 +74,18 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *)
     mousingMode = mmNone;
 }
 
+inline void normalize(double & x)
+{
+	while (x < 0) x += 360;
+	while (x > 360) x -= 360;
+}
+
 void GLWidget::mouseMoveEvent(QMouseEvent * e)
 {
     if (mousingMode != mmNone)
     {
-        int dX = e->globalPos().x() - panMousePos.x();
-        int dY = e->globalPos().y() - panMousePos.y();
+        double dX = e->globalPos().x() - panMousePos.x();
+        double dY = e->globalPos().y() - panMousePos.y();
         panMousePos = e->globalPos();
 
         switch (mousingMode)
@@ -92,9 +98,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent * e)
             yRot += dX;
             xRot += dY * cos(yRot * PI / 180);
             zRot += dY * sin(yRot * PI / 180);
-            emit xRotChanged((int) xRot);
-            emit yRotChanged((int) yRot);
-            emit zRotChanged((int) zRot);
+
+	    normalize(xRot); normalize(yRot); normalize(zRot);
+
+            emit xRotChanged(lround(xRot));
+            emit yRotChanged(lround(yRot));
+            emit zRotChanged(lround(zRot));
             break;
         default:
             return;

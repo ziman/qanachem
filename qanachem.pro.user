@@ -76,15 +76,16 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-InzPkFUV7q,guid=050ae171eefd9ba256737069000000e8</value>
+    <value type="QString">COIN_DONT_INFORM_INDIRECT_RENDERING=1</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3RFuiPLGfY,guid=653b81a67f607d0fb3b3fe2600000035</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">EDITOR=vim</value>
     <value type="QString">GDMSESSION=default</value>
     <value type="QString">GDM_LANG=en_US.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-QElsBq</value>
-    <value type="QString">GNOME_KEYRING_PID=1881</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-NbOjvg</value>
+    <value type="QString">GNOME_KEYRING_PID=2100</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/ziman</value>
     <value type="QString">LANG=en_US.utf8</value>
@@ -108,15 +109,15 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=2018</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-rhMscm1962/agent.1962</value>
+    <value type="QString">SSH_AGENT_PID=2237</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-itaqCJ2181/agent.2181</value>
     <value type="QString">USER=ziman</value>
     <value type="QString">USERNAME=ziman</value>
     <value type="QString">VISUAL=vim</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XAUTHORITY=/home/ziman/.Xauthority</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=4031aca7e6c4f7f0e321ef944ba15710-1285951214.20849-2132788715</value>
+    <value type="QString">XDG_SESSION_COOKIE=4031aca7e6c4f7f0e321ef944ba15710-1285975167.787628-654069242</value>
     <value type="QString">_=/usr/bin/krunner</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -136,15 +137,16 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-InzPkFUV7q,guid=050ae171eefd9ba256737069000000e8</value>
+    <value type="QString">COIN_DONT_INFORM_INDIRECT_RENDERING=1</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3RFuiPLGfY,guid=653b81a67f607d0fb3b3fe2600000035</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">EDITOR=vim</value>
     <value type="QString">GDMSESSION=default</value>
     <value type="QString">GDM_LANG=en_US.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-QElsBq</value>
-    <value type="QString">GNOME_KEYRING_PID=1881</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-NbOjvg</value>
+    <value type="QString">GNOME_KEYRING_PID=2100</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/ziman</value>
     <value type="QString">LANG=en_US.utf8</value>
@@ -168,15 +170,15 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=2018</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-rhMscm1962/agent.1962</value>
+    <value type="QString">SSH_AGENT_PID=2237</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-itaqCJ2181/agent.2181</value>
     <value type="QString">USER=ziman</value>
     <value type="QString">USERNAME=ziman</value>
     <value type="QString">VISUAL=vim</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XAUTHORITY=/home/ziman/.Xauthority</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=4031aca7e6c4f7f0e321ef944ba15710-1285951214.20849-2132788715</value>
+    <value type="QString">XDG_SESSION_COOKIE=4031aca7e6c4f7f0e321ef944ba15710-1285975167.787628-654069242</value>
     <value type="QString">_=/usr/bin/krunner</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>

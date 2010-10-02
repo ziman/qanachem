@@ -35,7 +35,7 @@ class GLWidget : public QGLWidget
 Q_OBJECT
 
     GLuint object;
-    int xRot, yRot, zRot;
+    double xRot, yRot, zRot;
     int eyeDistance;
     double atomSizeScale;
     double scale;
