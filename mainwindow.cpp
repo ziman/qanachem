@@ -54,7 +54,17 @@ void MainWindow::loadFile()
     if (fname.isNull()) return;
 
     try {
-        ui->display->setMolecule(Molecule(fname));
+        Molecule mol(fname);
+        ui->display->setMolecule(mol);
+
+        // auto-set render mode
+        int mode = 0;
+        int count = mol.atoms.count();
+        if (count < 100) mode = 0;
+        if (count > 100) mode = 1;
+        if (count > 1000) mode = 2;
+
+        ui->comboBox->setCurrentIndex(mode);
     } catch (...) {
         QMessageBox::critical(this, "Load molecule", "Unable to load " + fname + ".");
     }
