@@ -69,7 +69,7 @@ void GLWidget::mousePressEvent(QMouseEvent * e)
     panMousePos = e->globalPos();
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent * e)
+void GLWidget::mouseReleaseEvent(QMouseEvent *)
 {
     mousingMode = mmNone;
 }
@@ -90,8 +90,14 @@ void GLWidget::mouseMoveEvent(QMouseEvent * e)
             break;
         case mmRotate:
             yRot += dX;
-            xRot += dY;
+            xRot += dY * cos(yRot * PI / 180);
+            zRot += dY * sin(yRot * PI / 180);
+            emit xRotChanged((int) xRot);
+            emit yRotChanged((int) yRot);
+            emit zRotChanged((int) zRot);
             break;
+        default:
+            return;
         }
 
         update();
@@ -101,6 +107,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent * e)
 void GLWidget::wheelEvent(QWheelEvent * e)
 {
     scale *= (1 + 0.0005 * e->delta());
+    emit scaleChanged((int) 100 * scale);
     update();
 }
 
@@ -116,24 +123,32 @@ const Molecule & GLWidget::getMolecule()
 
 void GLWidget::setXRot(int value)
 {
+    if (mousingMode != mmNone) return;
+
     xRot = value;
     update();
 }
 
 void GLWidget::setYRot(int value)
 {
+    if (mousingMode != mmNone) return;
+
     yRot = value;
     update();
 }
 
 void GLWidget::setZRot(int value)
 {
+    if (mousingMode != mmNone) return;
+
     zRot = value;
     update();
 }
 
 void GLWidget::setScale(int value)
 {
+    if (mousingMode != mmNone) return;
+
     scale = value / 100.0;
     update();
 }

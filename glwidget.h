@@ -73,6 +73,10 @@ protected:
      virtual void wheelEvent(QWheelEvent * e);
 
 signals:
+     void xRotChanged(int value);
+     void yRotChanged(int value);
+     void zRotChanged(int value);
+     void scaleChanged(int value);
 
 public slots:
      void setXRot(int value);

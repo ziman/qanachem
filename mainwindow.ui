@@ -399,6 +399,10 @@
    <header location="global">glwidget.h</header>
    <container>1</container>
    <slots>
+    <signal>xRotChanged(int)</signal>
+    <signal>yRotChanged(int)</signal>
+    <signal>zRotChanged(int)</signal>
+    <signal>scaleChanged(int)</signal>
     <slot>setXRot(int)</slot>
     <slot>setYRot(int)</slot>
     <slot>setZRot(int)</slot>
@@ -667,6 +671,54 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>display</sender>
+   <signal>xRotChanged(int)</signal>
+   <receiver>sbX</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>181</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>19</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>display</sender>
+   <signal>yRotChanged(int)</signal>
+   <receiver>sbY</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>152</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>52</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>display</sender>
+   <signal>zRotChanged(int)</signal>
+   <receiver>sbZ</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>156</x>
+     <y>295</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>85</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
