@@ -36,6 +36,9 @@ void MainWindow::saveView()
     QString fname = QFileDialog::getSaveFileName(this, "Save view as image", "snapshots/", "PNG files (*.png);;All files (*)");
     if (fname.isNull()) return;
 
+    // add the PNG suffix if needed
+    if (!fname.endsWith(".png", Qt::CaseInsensitive)) fname.append(".png");
+
     QImage img = ui->display->grabFrameBuffer(false);
     img.save(fname, "PNG", 0);
 }
