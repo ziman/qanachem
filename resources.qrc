@@ -3,5 +3,10 @@
         <file>icons/exit.png</file>
         <file>icons/exit.svgz</file>
         <file>icons/DNA_icon.svg</file>
+        <file>icons/colorize.png</file>
+        <file>icons/configure_toolbars.png</file>
+        <file>icons/fileexport.png</file>
+        <file>icons/fileopen.png</file>
+        <file>icons/view_detailed.png</file>
     </qresource>
 </RCC>
