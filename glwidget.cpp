@@ -213,13 +213,17 @@ void GLWidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    /*
     const float light_ambient[4]  = { 0.2f, 0.2f, 0.2f, 1.0f };
     const float light_diffuse[4]  = { 1.0f, 1.0f, 1.0f, 1.0f };
     const float light_specular[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    */
+
+    const float light_position[4] = { -5, 5, 5, 1 };
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
     glEnable(GL_LIGHTING);    /* enable lighting */
     glEnable(GL_LIGHT0);        /* enable light 0 */
