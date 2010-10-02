@@ -187,13 +187,59 @@ void GLWidget::setMolecule(const Molecule &molecule)
     update();
 }
 
-static void drawBond(BondType type)
+static void drawLineBond(BondType type)
+{
+    glColor3f(1,1,1);
+    glBegin(GL_LINES);
+    switch (type)
+    {
+    case btSingle:
+        glVertex3f(0,0,0); glVertex3f(1,0,0);
+        break;
+
+    case btDouble:
+        glVertex3f(0,-0.0875,0); glVertex3f(1,-0.0875,0);
+        glVertex3f(0,0.0875,0); glVertex3f(1,0.0875,0);
+        break;
+
+    case btTriple:
+        glVertex3f(0,-0.105,0); glVertex3f(1,-0.105,0);
+        glVertex3f(0,0,0); glVertex3f(1,0,0);
+        glVertex3f(0,0.105,0); glVertex3f(1,0.105,0);
+        break;
+
+    default:
+        glVertex3f(0,0,0); glVertex3f(1,0,0);
+        break;
+    }
+    glEnd();
+}
+
+static void drawBond(BondType type, RenderMode renderMode)
 {
     static GLUquadric *quad = gluNewQuadric();
-    static const double singleBondRadius = 0.07;
-    static const double doubleBondRadius = 0.05;
-    static const double tripleBondRadius = 0.04;
-    static const double bondDistanceC = 1.75;
+    double baseRadius = 0.01;
+    double bondDistanceC = 1.75;
+
+    int slices = 12;
+    int stacks = 4;
+    switch (renderMode)
+    {
+    case rmSmall:
+        slices = 12; stacks = 4; break;
+    case rmLarge:
+        slices = 8; stacks = 2;
+        baseRadius *= 0.5;
+        bondDistanceC *= 2;
+        break;
+    case rmGiant:
+        drawLineBond(type);
+        return;
+    }
+
+    double singleBondRadius = 7 * baseRadius;
+    double doubleBondRadius = 5 * baseRadius;
+    double tripleBondRadius = 4 * baseRadius;
 
     glRotatef(90, 1, 0, 0);
     glRotatef(90, 0, 1, 0);
@@ -262,14 +308,14 @@ static void stretchBond(const Atom &a, const Atom &b)
     glScalef(dXYZ, 1, 1);
 }
 
-void GLWidget::smallObject()
+void GLWidget::smallObject(RenderMode renderMode)
 {
     // draw bonds
     foreach (Bond bond, molecule.bonds)
     {
         glPushMatrix();
         stretchBond(*bond.a, *bond.b);
-        drawBond(bond.type);
+        drawBond(bond.type, renderMode);
         glPopMatrix();
     }
 
@@ -284,7 +330,18 @@ void GLWidget::smallObject()
             float mat[4] = {it->color.redF(), it->color.greenF(), it->color.blueF(), 1.0};
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat);
             glTranslated(atom.x, atom.y, atom.z);
-            glutSolidSphere(it->radius * atomSizeScale, 24, 12);
+            switch (renderMode)
+            {
+            case rmSmall:
+                glutSolidSphere(it->radius * atomSizeScale, 24, 12);
+                break;
+            case rmLarge:
+                glutSolidSphere(it->radius * atomSizeScale * 0.5, 8, 8);
+                break;
+            case rmGiant:
+                glutSolidSphere(it->radius * atomSizeScale * 0.5, 4, 4);
+                break;
+            }
         }
         else
         {
@@ -363,17 +420,7 @@ void GLWidget::recacheObject()
 
     object = glGenLists(1);
     glNewList(object, GL_COMPILE);
-
-    switch (renderMode)
-    {
-    case rmSmall:
-        smallObject(); break;
-    case rmLarge:
-        largeObject(); break;
-    case rmGiant:
-        giantObject(); break;
-    }
-
+    smallObject(renderMode);
     glEndList();
 }
 

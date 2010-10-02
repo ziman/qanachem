@@ -40,7 +40,7 @@ Q_OBJECT
 
     void renderImage();
 
-    void smallObject();
+    void smallObject(RenderMode renderMode);
     void largeObject();
     void giantObject();
     void recacheObject();
