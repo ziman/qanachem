@@ -38,6 +38,7 @@ Q_OBJECT
     bool paintAtoms;
     QMap<QString, Element> elements;
     RenderMode renderMode;
+    double panX, panY, panZ;
 
     void renderImage();
 
@@ -57,6 +58,10 @@ protected:
      virtual void initializeGL();
      virtual void paintGL();
      virtual void resizeGL(int width, int height);
+     virtual void mousePressEvent(QMouseEvent * e);
+     virtual void mouseReleaseEvent(QMouseEvent * e);
+     virtual void mouseMoveEvent(QMouseEvent * e);
+     virtual void wheelEvent(QWheelEvent * e);
 
 signals:
 

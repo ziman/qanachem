@@ -34,6 +34,7 @@ GLWidget::GLWidget(QWidget *parent)
 {
     object = 0;
     xRot = yRot = zRot = 0;
+    panX = panY = panZ = 0;
     scale = 1;
     atomSizeScale = 0.25;
     anaglyph = true;
@@ -45,6 +46,24 @@ GLWidget::GLWidget(QWidget *parent)
 
     for (ElmRec * p = elemRec; !p->name.isNull(); ++p)
         elements.insert(p->name, p->elm);
+}
+
+void GLWidget::mousePressEvent(QMouseEvent * e)
+{
+}
+
+void GLWidget::mouseReleaseEvent(QMouseEvent * e)
+{
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent * e)
+{
+}
+
+void GLWidget::wheelEvent(QWheelEvent * e)
+{
+    scale *= (1 + 0.0005 * e->delta());
+    update();
 }
 
 const QMap<QString, Element> & GLWidget::elementMap()
@@ -168,6 +187,7 @@ void GLWidget::paintGL()
 
         // red image
         glLoadIdentity();
+        glTranslated(-panX, -panY, -panZ);
         glRotated(convRot, 0.0, 1.0, 0.0);
         glTranslated(xShift, 0, -zShift);
         glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_TRUE);
@@ -177,6 +197,7 @@ void GLWidget::paintGL()
 
         // cyan image
         glLoadIdentity();
+        glTranslated(-panX, -panY, -panZ);
         glRotated(-convRot, 0.0, 1.0, 0.0);
         glTranslated(-xShift, 0, -7.0);
         glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -187,6 +208,7 @@ void GLWidget::paintGL()
     else
     {
         glLoadIdentity();
+        glTranslated(-panX, -panY, -panZ);
         glTranslated(0, 0, -zShift);
         renderImage();
     }
