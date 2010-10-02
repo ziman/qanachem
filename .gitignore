@@ -5,3 +5,4 @@ qanachem
 moc_*
 ui_*
 qrc_*
+snapshots/*.png
